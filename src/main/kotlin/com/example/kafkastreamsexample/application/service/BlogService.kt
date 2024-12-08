@@ -19,74 +19,44 @@ class BlogService(
     private val objectMapper: ObjectMapper,
     private val domainEventPort: DomainEventPort
 ) : BlogUseCase {
-    override fun createBlog(blog: Blog): Mono<Blog> {
-        val blogWithId = blog.copy(id = UUID.randomUUID().toString())
+    private fun publishBlogEvent(
+        blog: Blog,
+        eventType: String,
+        blogEventType: BlogEventType
+    ): Mono<Blog> {
         val domainEvent = DomainEvent(
-            id = blogWithId.id,
-            eventType = "BlogCreated",
-            payload = objectMapper.writeValueAsString(blogWithId)
+            id = blog.id,
+            eventType = eventType,
+            payload = objectMapper.writeValueAsString(blog)
         )
 
         return domainEventPort.save(domainEvent)
             .flatMap { savedEvent ->
                 val blogEvent = BlogEvent(
-                    id = blogWithId.id!!,
-                    eventType = BlogEventType.CREATED,
-                    data = objectMapper.writeValueAsString(blogWithId),
+                    id = blog.id!!,
+                    eventType = blogEventType,
+                    data = objectMapper.writeValueAsString(blog),
                     domainEventId = savedEvent.id!!
                 )
                 blogEventPublisher.publish(blogEvent)
-                    .then(Mono.just(blogWithId))
+                    .then(Mono.just(blog))
                     .onErrorMap { error ->
                         BlogEventPublishException("Failed to publish blog event", error)
                     }
             }
+    }
+
+    override fun createBlog(blog: Blog): Mono<Blog> {
+        val blogWithId = blog.copy(id = UUID.randomUUID().toString())
+        return publishBlogEvent(blogWithId, "BlogCreated", BlogEventType.CREATED)
     }
 
     override fun updateBlog(blog: Blog): Mono<Blog> {
-        val domainEvent = DomainEvent(
-            id = blog.id,
-            eventType = "BlogUpdated",
-            payload = objectMapper.writeValueAsString(blog)
-        )
-
-        return domainEventPort.save(domainEvent)
-            .flatMap { savedEvent ->
-                val blogEvent = BlogEvent(
-                    id = blog.id!!,
-                    eventType = BlogEventType.UPDATED,
-                    data = objectMapper.writeValueAsString(blog),
-                    domainEventId = savedEvent.id!!
-                )
-                blogEventPublisher.publish(blogEvent)
-                    .then(Mono.just(blog))
-                    .onErrorMap { error ->
-                        BlogEventPublishException("Failed to publish blog event", error)
-                    }
-            }
+        return publishBlogEvent(blog, "BlogUpdated", BlogEventType.UPDATED)
     }
 
     override fun deleteBlog(blog: Blog): Mono<Blog> {
-        val domainEvent = DomainEvent(
-            id = blog.id,
-            eventType = "BlogDeleted",
-            payload = objectMapper.writeValueAsString(blog)
-        )
-
-        return domainEventPort.save(domainEvent)
-            .flatMap { savedEvent ->
-                val blogEvent = BlogEvent(
-                    id = blog.id!!,
-                    eventType = BlogEventType.DELETED,
-                    data = objectMapper.writeValueAsString(blog),
-                    domainEventId = savedEvent.id!!
-                )
-                blogEventPublisher.publish(blogEvent)
-                    .then(Mono.just(blog))
-                    .onErrorMap { error ->
-                        BlogEventPublishException("Failed to publish blog event", error)
-                    }
-            }
+        return publishBlogEvent(blog, "BlogDeleted", BlogEventType.DELETED)
     }
 }
 
