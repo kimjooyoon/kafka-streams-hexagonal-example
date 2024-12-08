@@ -22,3 +22,13 @@ spring:
       username: root
       password: secret
 
+kafka:
+  topics:
+    input:
+      name: input-topic
+      partitions: 1
+      replicas: 1
+    output:
+      name: output-topic
+      partitions: 1
+      replicas: 1
