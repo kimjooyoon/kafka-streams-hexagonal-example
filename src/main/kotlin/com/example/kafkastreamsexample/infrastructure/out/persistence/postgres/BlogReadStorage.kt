@@ -1,4 +1,3 @@
-// infrastructure/out/persistence/postgres/BlogReadStorage.kt
 package com.example.kafkastreamsexample.infrastructure.out.persistence.postgres
 
 import com.example.kafkastreamsexample.domain.event.BlogEvent

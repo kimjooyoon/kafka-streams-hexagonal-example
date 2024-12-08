@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.domain.Persistable
 import org.springframework.data.relational.core.mapping.Table
 import java.time.LocalDateTime
+import org.springframework.data.annotation.Transient
 
 @Table("blogs")
 data class BlogReadEntity(
@@ -16,6 +17,8 @@ data class BlogReadEntity(
     val updatedAt: LocalDateTime = LocalDateTime.now(),
     val status: String = "ACTIVE",
     val version: Long = 1,
+    @Transient @JvmField
+    val newBlog:Boolean = true
 ): Persistable<String> {
 
     override fun getId(): String? {
@@ -23,6 +26,6 @@ data class BlogReadEntity(
     }
 
     override fun isNew(): Boolean {
-        return true
+        return newBlog
     }
 }
