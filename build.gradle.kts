@@ -30,6 +30,11 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    implementation("org.postgresql:r2dbc-postgresql:1.0.4.RELEASE")
+    implementation("org.postgresql:postgresql:42.7.2")
+
     implementation("org.springframework.kafka:spring-kafka")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

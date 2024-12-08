@@ -1,4 +1,4 @@
-package com.example.kafkastreamsexample.infrastructure.out.persistency
+package com.example.kafkastreamsexample.infrastructure.out.persistence
 
 import com.example.kafkastreamsexample.domain.model.DomainEvent
 import com.example.kafkastreamsexample.domain.port.out.DomainEventPort

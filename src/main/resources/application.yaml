@@ -1,5 +1,8 @@
 spring:
   kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     streams:
       application-id: kafka-streams-example
       bootstrap-servers: localhost:9092
@@ -21,6 +24,14 @@ spring:
       database: mydatabase
       username: root
       password: secret
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/blogdb
+    username: bloguser
+    password: blogpass
+    pool:
+      initial-size: 5
+      max-size: 20
 
 kafka:
   topics:

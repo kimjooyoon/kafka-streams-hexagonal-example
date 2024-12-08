@@ -26,6 +26,17 @@ services:
       CLUSTER_ID: 'KafkaKRaftCluster'
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
 
+  postgres:
+    image: postgres:16.1
+    environment:
+      POSTGRES_DB: blogdb
+      POSTGRES_USER: bloguser
+      POSTGRES_PASSWORD: blogpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   prometheus:
     image: prom/prometheus:v2.48.1
     ports:
@@ -44,3 +55,7 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
     depends_on:
       - prometheus
+
+volumes:
+  postgres_data:
+
