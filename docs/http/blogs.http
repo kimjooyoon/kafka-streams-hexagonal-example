@@ -1,0 +1,32 @@
+### 블로그 생성
+POST localhost:8080/api/blogs
+Content-Type: application/json
+
+{
+  "title": "WebFlux Blog Post",
+  "content": "This is a reactive blog post.",
+  "author": "John Doe"
+}
+
+### 블로그 수정
+PUT localhost:8080/api/blogs
+Content-Type: application/json
+
+{
+  "id": "b743b927-1c0e-40f0-9618-ceb46988cee5",
+  "title": "WebFlux Blog Post Test",
+  "content": "This is a reactive blog put.",
+  "author": "Teddy"
+}
+
+
+### 블로그 삭제
+DELETE localhost:8080/api/blogs
+Content-Type: application/json
+
+{
+  "id": "b743b927-1c0e-40f0-9618-ceb46988cee5",
+  "title": "WebFlux Blog Post Test",
+  "content": "This is a reactive blog put.",
+  "author": "Teddy"
+}
