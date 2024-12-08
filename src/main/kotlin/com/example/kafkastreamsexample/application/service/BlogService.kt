@@ -25,7 +25,7 @@ class BlogService(
         blogEventType: BlogEventType
     ): Mono<Blog> {
         val domainEvent = DomainEvent(
-            id = blog.id,
+            id = UUID.randomUUID().toString(),
             eventType = eventType,
             payload = objectMapper.writeValueAsString(blog)
         )

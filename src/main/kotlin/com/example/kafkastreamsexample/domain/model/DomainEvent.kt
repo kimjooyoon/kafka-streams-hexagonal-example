@@ -2,7 +2,7 @@ package com.example.kafkastreamsexample.domain.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
-import java.time.Instant
+import java.time.LocalDateTime
 
 @Document(collection = "domain_events")
 data class DomainEvent(
@@ -10,5 +10,5 @@ data class DomainEvent(
     val id: String? = null,
     val eventType: String,
     val payload: String,
-    val timestamp: Instant = Instant.now()
+    val createdAt: LocalDateTime = LocalDateTime.now()
 )
