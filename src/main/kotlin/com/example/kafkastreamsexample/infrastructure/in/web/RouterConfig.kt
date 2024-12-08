@@ -17,6 +17,8 @@ class RouterConfig(private val handler: BlogHandler) {
                 accept(MediaType.APPLICATION_JSON).nest {
                     GET("", handler::getBlogs)
                     POST("", handler::createBlog)
+                    PUT("", handler::updateBlog)
+                    DELETE("", handler::deleteBlog)
                 }
             }
         }

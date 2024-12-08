@@ -16,10 +16,11 @@ data class BlogReadEntity(
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime = LocalDateTime.now(),
     val status: String = "ACTIVE",
-    val version: Long = 1,
-    @Transient @JvmField
-    val newBlog:Boolean = true
-): Persistable<String> {
+    val version: Long = 1
+) : Persistable<String> {
+    @Transient
+    @JvmField
+    var newBlog: Boolean = false
 
     override fun getId(): String? {
         return id

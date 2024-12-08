@@ -33,6 +33,7 @@ class BlogReadStorage(
             author = blog.author,
             createdAt = blog.createdAt
         )
+        entity.newBlog = true
         return blogReadRepository.save(entity)
     }
 
@@ -40,10 +41,14 @@ class BlogReadStorage(
         return blogReadRepository.findById(blog.id!!)
             .map { existing ->
                 existing.copy(
+                    id = existing.id!!,
                     title = blog.title,
                     content = blog.content,
+                    author = existing.author,
+                    createdAt = existing.createdAt,
                     updatedAt = LocalDateTime.now(),
-                    version = existing.version + 1
+                    status = existing.status,
+                    version = existing.version + 1,
                 )
             }
             .flatMap { blogReadRepository.save(it) }
@@ -51,7 +56,9 @@ class BlogReadStorage(
 
     private fun deleteBlog(id: String): Mono<BlogReadEntity> {
         return blogReadRepository.findById(id)
-            .map { it.copy(status = "DELETED", updatedAt = LocalDateTime.now()) }
+            .map {
+                it.copy(status = "DELETED", updatedAt = LocalDateTime.now())
+            }
             .flatMap { blogReadRepository.save(it) }
     }
 }
