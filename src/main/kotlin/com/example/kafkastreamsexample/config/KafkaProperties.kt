@@ -1,4 +1,3 @@
-// config/KafkaProperties.kt
 package com.example.kafkastreamsexample.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties

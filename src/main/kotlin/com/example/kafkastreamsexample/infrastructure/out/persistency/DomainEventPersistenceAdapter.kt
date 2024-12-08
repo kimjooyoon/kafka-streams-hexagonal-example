@@ -11,6 +11,6 @@ class DomainEventPersistenceAdapter(
     private val domainEventRepository: DomainEventRepository
 ) : DomainEventPort {
     override fun save(domainEvent: DomainEvent): Mono<DomainEvent> {
-        return Mono.just(domainEventRepository.save(domainEvent))
+        return domainEventRepository.save(domainEvent)
     }
 }
