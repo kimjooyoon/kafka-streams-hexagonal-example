@@ -1,4 +1,24 @@
 spring:
-  application:
-    name: kafka-streams-example
+  kafka:
+    streams:
+      application-id: kafka-streams-example
+      bootstrap-servers: localhost:9092
+      properties:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+    admin:
+      auto-create: true
+      properties:
+        bootstrap.servers: localhost:9092
+    topics:
+      input: input-topic
+      output: output-topic
+
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: mydatabase
+      username: root
+      password: secret
 
