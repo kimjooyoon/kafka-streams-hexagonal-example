@@ -1,11 +1,12 @@
 ### apply CQRS(command/read model)
 - command is webflux
-- trensfet read model to kafka + streams
+- transfer read model to kafka + streams
 
 ### apply hexagonal architecture
 
 ### TODOs
 
+- event sourcing
 - validate command -> read statistics, aggregate model
 - eventually consistency
 - saga
